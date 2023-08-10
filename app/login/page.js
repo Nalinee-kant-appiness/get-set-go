@@ -1,18 +1,22 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import badmintonImage from "../../public/badminton.png";
+import badmintonImage from "../../public/Badminton.svg";
 import editLogo from "../../public/Vector.svg";
-import getSetGoLogo from "../../public/getSetGoLogo.png";
+import getSetGoLogo from "../../public/getSetGo.svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-const fillOtp = Array(5).fill("");
+import { useRouter } from "next/navigation";
+const fillOtp = Array(6).fill("");
 const LoginPage = () => {
   const [mobileNumber, setMobileNumber] = useState("+91 ");
   const [verifyOtpPage, setVerifyOtpPage] = useState(false);
-  const [enteredOtp, setEnteredOtp] = useState('');
+  // const [enteredOtp, setEnteredOtp] = useState({0:'',1:'',2:'',3:'',4:''});
+  const [enteredOtp, setEnteredOtp] = useState("");
   const [timer, setTimer] = useState(60);
+  const [errorMessage, setErrorMessage] = useState({ mobileNumber: false });
+
+  const router = useRouter();
 
   const displayTimer = () => {
     setTimer(timer - 1);
@@ -24,12 +28,35 @@ const LoginPage = () => {
     clearInterval(intervalValue);
   }
 
-  const getEnteredOtp=(e)=>{
-    const value=enteredOtp
-   const newValue= value.concat(e.target.value)
-   setEnteredOtp(newValue)
+  const getEnteredOtp = (e, index) => {
+    const value = enteredOtp;
+    const newValue = value.concat(e.target.value);
+    setEnteredOtp(newValue);
+    // let inputValue=enteredOtp
+    // inputValue[index]=e.target.value
 
-  }
+    //   setEnteredOtp({...enteredOtp,[index]:inputValue})
+  };
+  // console.log(enteredOtp)
+  const verifyOtp = () => {
+    router.push("/home");
+  };
+  const getMobileNumber = (e) => {
+    setMobileNumber(e.target.value);
+    const phoneNumber = mobileNumber;
+    const phoneArr = phoneNumber.split(" ");
+    // if(phoneArr.length)
+    // {
+    //   setErrorMessage()
+    // }
+
+    if (phoneArr[1].length >= 9 ) {
+      setErrorMessage({ ...errorMessage,mobileNumber:false});
+    }
+    else{
+      setErrorMessage({ ...errorMessage,mobileNumber:true});
+    }
+  };
 
   return (
     <div className="w-full h-full">
@@ -60,9 +87,12 @@ const LoginPage = () => {
                     pattern="[0-9]{10}"
                     required
                     value={mobileNumber}
-                    onChange={(e) => setMobileNumber(e.target.value)}
+                    onChange={getMobileNumber}
                     className="w-11/12 text-LoginInputTextColor"
                   />
+                  {errorMessage.mobileNumber &&
+                  <small className='text-red-600'> phone number should not be less than 10 </small>}
+                  
                 </div>
                 <div className="flex justify-center mt-6">
                   <Button
@@ -83,10 +113,10 @@ const LoginPage = () => {
                   </p>
                   <Image src={editLogo} alt="edit logo" />
                 </div>
-                <div className="w-4/5 flex  gap-6">
-                  {fillOtp.map((item,index) => (
+                <div className="w-4/5 flex  gap-3.5">
+                  {fillOtp.map((item, index) => (
                     <Input
-                    key={index}
+                      key={index}
                       value={enteredOtp}
                       onChange={getEnteredOtp}
                       maxLength="1"
@@ -99,17 +129,20 @@ const LoginPage = () => {
                     <small>Didn't receive OTP? </small>
                   </div>
                   <div>
-                    <small className="underline underline-offset-1 text-[#F26138]">
+                    <small className="underline underline-offset-1 text-[#F26138] ">
                       RESEND OTP
                     </small>
                   </div>
                 </div>
-                  <div>
-                    <small className="ext-cyan-800" >{`resend again in ${timer}`}</small>
-                  </div>
+                <div>
+                  <small className="ext-cyan-800">{`resend again in ${timer}`}</small>
+                </div>
               </div>
               <div>
-                <Button className="bg-gradient-to-r from-[#EE2C35] to-[#F5873C]" onClick={(e)=>console.log(enteredOtp)}>
+                <Button
+                  className="bg-gradient-to-r from-[#EE2C35] to-[#F5873C]"
+                  onClick={verifyOtp}
+                >
                   Verify & Continue
                 </Button>
               </div>

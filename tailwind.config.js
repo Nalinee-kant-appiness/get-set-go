@@ -19,6 +19,8 @@ module.exports = {
       colors: {
         LoginInputTextColor:'#F04338',
         OffBlackTextColor:'#000000',
+        sideBarColor:'#F9F9F9',
+        sideBarHoverColor:'#FFD7D7',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
