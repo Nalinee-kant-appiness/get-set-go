@@ -7,7 +7,9 @@ import getSetGoLogo from "../../public/getSetGo.svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+
 const fillOtp = Array(6).fill("");
+
 const LoginPage = () => {
   const [mobileNumber, setMobileNumber] = useState("+91 ");
   const [verifyOtpPage, setVerifyOtpPage] = useState(false);
@@ -32,10 +34,6 @@ const LoginPage = () => {
     const value = enteredOtp;
     const newValue = value.concat(e.target.value);
     setEnteredOtp(newValue);
-    // let inputValue=enteredOtp
-    // inputValue[index]=e.target.value
-
-    //   setEnteredOtp({...enteredOtp,[index]:inputValue})
   };
   // console.log(enteredOtp)
   const verifyOtp = () => {
@@ -45,10 +43,6 @@ const LoginPage = () => {
     setMobileNumber(e.target.value);
     const phoneNumber = mobileNumber;
     const phoneArr = phoneNumber.split(" ");
-    // if(phoneArr.length)
-    // {
-    //   setErrorMessage()
-    // }
 
     if (phoneArr[1].length >= 9 ) {
       setErrorMessage({ ...errorMessage,mobileNumber:false});

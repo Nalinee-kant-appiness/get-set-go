@@ -21,6 +21,7 @@ module.exports = {
         OffBlackTextColor:'#000000',
         sideBarColor:'#F9F9F9',
         sideBarHoverColor:'#FFD7D7',
+        blueButton:'#428AEC',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

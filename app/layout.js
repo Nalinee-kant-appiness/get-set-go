@@ -13,7 +13,9 @@ export default function RootLayout({ children }) {
   const login=isLogin()
   return (
     <html lang="en">
-      <body className={inter.className}>{!login && children}</body>
+      <body className={inter.className}>{!login && 
+      children}
+      </body>
     </html>
   );
 }

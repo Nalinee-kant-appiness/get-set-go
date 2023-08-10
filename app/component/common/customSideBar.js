@@ -33,7 +33,7 @@ const CustomSideBar = () => {
           </div>
         ))}
       </div>
-      <div className=" pt-20   ">
+      <div className=" pt-20   " onClick={()=>router.push('/')}>
         <div className=" rounded pl-3 flex gap-2 items-center hover:bg-sideBarHoverColor w-full h-6 cursor-pointer">
           <Image src={LogoutImage} alt="logout image" />
           <small>Logout</small>

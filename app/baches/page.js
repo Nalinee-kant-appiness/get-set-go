@@ -1,12 +1,18 @@
+import CustomHeader from "../component/common/CustomHeader";
 import LandingPage from "../landingPage/landingPage";
 
-const BachesPage=()=>{
-    return (
-        <div className="w-full h-full">
-            <LandingPage>
-            <h1>welcome to the Baches page</h1>
-            </LandingPage>
+const BachesPage = () => {
+  return (
+    <div className="w-full h-full">
+      <LandingPage>
+        <div className=" w-full h-full">
+          <CustomHeader heading="Hello, Admin!" />
+          <div className="w-full flex justify-center items-center">
+          <h1>welcome to the Baches page</h1>
+          </div>
         </div>
-    )
-}
-    export default BachesPage;
+      </LandingPage>
+    </div>
+  );
+};
+export default BachesPage;
