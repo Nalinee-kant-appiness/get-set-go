@@ -39,7 +39,7 @@ const LoginPage = () => {
   };
   // console.log(enteredOtp)
   const verifyOtp = () => {
-    router.push("/home");
+    router.push("/dashboard");
   };
   const getMobileNumber = (e) => {
     setMobileNumber(e.target.value);
