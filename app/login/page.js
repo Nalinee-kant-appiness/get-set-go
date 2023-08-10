@@ -60,7 +60,7 @@ const LoginPage = () => {
     const phoneNumber = mobileNumber;
     const phoneArr = phoneNumber.split(" ");
 
-    if (phoneArr[1].length >= 9 ) {
+    if (phoneArr[1].length ===9 ) {
       setErrorMessage({ ...errorMessage,mobileNumber:false});
     }
     else{
@@ -108,7 +108,7 @@ const LoginPage = () => {
                 <div className="flex justify-center mt-6">
                   <Button
                     className="w-40 bg-gradient-to-r from-[#EE2C35] to-[#F5873C] hover:bg-[#F36739]"
-                    onClick={() => setVerifyOtpPage(true)}
+                    onClick={() =>{ !errorMessage.mobileNumber && setVerifyOtpPage(true)}}
                   >
                     Generate OTP
                   </Button>
