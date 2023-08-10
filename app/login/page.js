@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import badmintonImage from "../../public/Badminton.svg";
 import editLogo from "../../public/Vector.svg";
@@ -13,31 +13,47 @@ const fillOtp = Array(6).fill("");
 const LoginPage = () => {
   const [mobileNumber, setMobileNumber] = useState("+91 ");
   const [verifyOtpPage, setVerifyOtpPage] = useState(false);
-  // const [enteredOtp, setEnteredOtp] = useState({0:'',1:'',2:'',3:'',4:''});
-  const [enteredOtp, setEnteredOtp] = useState("");
+  const [enteredOtp, setEnteredOtp] = useState({0:'',1:'',2:'',3:'',4:'',5:'',6:''});
+  // const [enteredOtp, setEnteredOtp] = useState("");
   const [timer, setTimer] = useState(60);
-  const [errorMessage, setErrorMessage] = useState({ mobileNumber: false });
+  const [errorMessage, setErrorMessage] = useState({ mobileNumber: false,otpError:false });
 
   const router = useRouter();
 
+  useEffect(()=>{
+    const otp={...enteredOtp}
+    const newOtp=otp[0]+otp[1]+otp[2]+otp[3]+otp[4]+otp[5]
+    console.log(newOtp,'<===otp')
+    if(newOtp!='123456' && newOtp.length>0 && newOtp.length<6)
+    {
+      setErrorMessage({...errorMessage,otpError:true})
+    }
+    else{
+      setErrorMessage({...errorMessage,otpError:false})
+    }
+  },[enteredOtp])
   const displayTimer = () => {
     setTimer(timer - 1);
   };
 
-  const intervalValue = setInterval(displayTimer, 1000);
+  // const intervalValue = setInterval(displayTimer, 1000);
 
   if (timer === 0) {
     clearInterval(intervalValue);
   }
 
   const getEnteredOtp = (e, index) => {
-    const value = enteredOtp;
-    const newValue = value.concat(e.target.value);
-    setEnteredOtp(newValue);
+    setEnteredOtp({...enteredOtp,[e.target.name]:e.target.value})
   };
-  // console.log(enteredOtp)
   const verifyOtp = () => {
-    router.push("/dashboard");
+    const otp={...enteredOtp}
+    const newOtp=otp[0]+otp[1]+otp[2]+otp[3]+otp[4]+otp[5]
+    if(!errorMessage.otpError && newOtp==='123456')
+    {
+      router.push("/dashboard");
+    }else{
+      setErrorMessage({...errorMessage,otpError:true})
+    }
   };
   const getMobileNumber = (e) => {
     setMobileNumber(e.target.value);
@@ -83,6 +99,7 @@ const LoginPage = () => {
                     value={mobileNumber}
                     onChange={getMobileNumber}
                     className="w-11/12 text-LoginInputTextColor"
+                    
                   />
                   {errorMessage.mobileNumber &&
                   <small className='text-red-600'> phone number should not be less than 10 </small>}
@@ -108,7 +125,7 @@ const LoginPage = () => {
                   <Image src={editLogo} alt="edit logo" />
                 </div>
                 <div className="w-4/5 flex  gap-3.5">
-                  {fillOtp.map((item, index) => (
+                  {/* {fillOtp.map((item, index) => (
                     <Input
                       key={index}
                       value={enteredOtp}
@@ -116,8 +133,55 @@ const LoginPage = () => {
                       maxLength="1"
                       className="w-9 "
                     />
-                  ))}
+                  ))} */}
+                   <Input
+                      value={enteredOtp[0]}
+                      onChange={getEnteredOtp}
+                      maxLength="1"
+                      className="w-9 "
+                      name='0'
+                    />
+                     <Input
+                      value={enteredOtp[1]}
+                      onChange={getEnteredOtp}
+                      maxLength="1"
+                      className="w-9 "
+                      name='1'
+                    />
+                     <Input
+                      value={enteredOtp[2]}
+                      onChange={getEnteredOtp}
+                      maxLength="1"
+                      className="w-9 "
+                    name='2'
+                    />
+                     <Input
+                      value={enteredOtp[3]}
+                      onChange={getEnteredOtp}
+                      maxLength="1"
+                      className="w-9 "
+                    name='3'
+                    />
+                     <Input
+                      value={enteredOtp[4]}
+                      onChange={getEnteredOtp}
+                      maxLength="1"
+                      className="w-9 "
+                      name='4'
+                    />
+                     <Input
+                      value={enteredOtp[5]}
+                      onChange={getEnteredOtp}
+                      maxLength="1"
+                      className="w-9 "
+                      name='5'
+                    />
                 </div>
+                {errorMessage.otpError ? (
+                <div>
+                  <small className="text-[#F44F57]">please enter the otp as 123456</small>
+                </div>
+                ):<></>}
                 <div className="flex ">
                   <div>
                     <small>Didn't receive OTP? </small>
