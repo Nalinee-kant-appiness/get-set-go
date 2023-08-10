@@ -6,7 +6,7 @@ const BulletinsPage = () => {
     <div className="w-full h-full">
       <LandingPage>
         <div className=" w-full h-full">
-          <CustomHeader heading="Hello, Admin!" />
+          <CustomHeader heading="Bulletin" />
           <div className="w-full flex justify-center items-center">
             <h1>welcome to the Bulletins page</h1>
           </div>

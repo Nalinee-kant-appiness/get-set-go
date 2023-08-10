@@ -6,7 +6,7 @@ const TrialClassesPage = () => {
     <div className="w-full h-full">
       <LandingPage>
         <div className=" w-full h-full">
-          <CustomHeader heading="Hello, Admin!" />
+          <CustomHeader heading="Trial Class" />
           <div className="w-full flex justify-center items-center">
             <h1>welcome to the TrialClasses page</h1>
           </div>

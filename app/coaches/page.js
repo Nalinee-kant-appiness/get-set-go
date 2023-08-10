@@ -6,7 +6,7 @@ const CoachesPage = () => {
     <div className="w-full h-full">
       <LandingPage>
         <div className=" w-full h-full">
-          <CustomHeader heading="Hello, Admin!" />
+          <CustomHeader heading="Coach details" />
           <div className="w-full flex justify-center items-center">
             <h1>welcome to the Coaches page</h1>
           </div>
