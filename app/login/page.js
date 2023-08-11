@@ -13,25 +13,34 @@ const fillOtp = Array(6).fill("");
 const LoginPage = () => {
   const [mobileNumber, setMobileNumber] = useState("+91 ");
   const [verifyOtpPage, setVerifyOtpPage] = useState(false);
-  const [enteredOtp, setEnteredOtp] = useState({0:'',1:'',2:'',3:'',4:'',5:'',6:''});
+  const [enteredOtp, setEnteredOtp] = useState({
+    0: "",
+    1: "",
+    2: "",
+    3: "",
+    4: "",
+    5: "",
+    6: "",
+  });
   // const [enteredOtp, setEnteredOtp] = useState("");
   const [timer, setTimer] = useState(60);
-  const [errorMessage, setErrorMessage] = useState({ mobileNumber: false,otpError:false });
+  const [errorMessage, setErrorMessage] = useState({
+    mobileNumber: false,
+    otpError: false,
+  });
 
   const router = useRouter();
 
-  useEffect(()=>{
-    const otp={...enteredOtp}
-    const newOtp=otp[0]+otp[1]+otp[2]+otp[3]+otp[4]+otp[5]
-    console.log(newOtp,'<===otp')
-    if(newOtp!='123456' && newOtp.length>0 && newOtp.length<6)
-    {
-      setErrorMessage({...errorMessage,otpError:true})
+  useEffect(() => {
+    const otp = { ...enteredOtp };
+    const newOtp = otp[0] + otp[1] + otp[2] + otp[3] + otp[4] + otp[5];
+    console.log(newOtp, "<===otp");
+    if (newOtp != "123456" && newOtp.length > 0 && newOtp.length < 6) {
+      setErrorMessage({ ...errorMessage, otpError: true });
+    } else {
+      setErrorMessage({ ...errorMessage, otpError: false });
     }
-    else{
-      setErrorMessage({...errorMessage,otpError:false})
-    }
-  },[enteredOtp])
+  }, [enteredOtp]);
   const displayTimer = () => {
     setTimer(timer - 1);
   };
@@ -43,16 +52,15 @@ const LoginPage = () => {
   }
 
   const getEnteredOtp = (e, index) => {
-    setEnteredOtp({...enteredOtp,[e.target.name]:e.target.value})
+    setEnteredOtp({ ...enteredOtp, [e.target.name]: e.target.value });
   };
   const verifyOtp = () => {
-    const otp={...enteredOtp}
-    const newOtp=otp[0]+otp[1]+otp[2]+otp[3]+otp[4]+otp[5]
-    if(!errorMessage.otpError && newOtp==='123456')
-    {
+    const otp = { ...enteredOtp };
+    const newOtp = otp[0] + otp[1] + otp[2] + otp[3] + otp[4] + otp[5];
+    if (!errorMessage.otpError && newOtp === "123456") {
       router.push("/dashboard");
-    }else{
-      setErrorMessage({...errorMessage,otpError:true})
+    } else {
+      setErrorMessage({ ...errorMessage, otpError: true });
     }
   };
   const getMobileNumber = (e) => {
@@ -60,11 +68,21 @@ const LoginPage = () => {
     const phoneNumber = mobileNumber;
     const phoneArr = phoneNumber.split(" ");
 
-    if (phoneArr[1].length ===9 ) {
-      setErrorMessage({ ...errorMessage,mobileNumber:false});
+    if (phoneArr[1].length === 9) {
+      setErrorMessage({ ...errorMessage, mobileNumber: false });
+    } else {
+      setErrorMessage({ ...errorMessage, mobileNumber: true });
     }
-    else{
-      setErrorMessage({ ...errorMessage,mobileNumber:true});
+  };
+  const verifyMobileNumber = () => {
+    const phoneNumber = mobileNumber;
+    const phoneArr = phoneNumber.split(" ");
+    if(phoneArr[1].length === 0)
+    {
+      setErrorMessage({ ...errorMessage, mobileNumber: true });
+    }
+    if (!errorMessage.mobileNumber && phoneArr[1].length != 0) {
+      setVerifyOtpPage(true);
     }
   };
 
@@ -99,16 +117,18 @@ const LoginPage = () => {
                     value={mobileNumber}
                     onChange={getMobileNumber}
                     className="w-11/12 text-LoginInputTextColor"
-                    
                   />
-                  {errorMessage.mobileNumber &&
-                  <small className='text-red-600'> phone number should not be less than 10 </small>}
-                  
+                  {errorMessage.mobileNumber && (
+                    <small className="text-red-600">
+                      {" "}
+                      phone number should not be less than 10{" "}
+                    </small>
+                  )}
                 </div>
                 <div className="flex justify-center mt-6">
                   <Button
                     className="w-40 bg-gradient-to-r from-[#EE2C35] to-[#F5873C] hover:bg-[#F36739]"
-                    onClick={() =>{ !errorMessage.mobileNumber && setVerifyOtpPage(true)}}
+                    onClick={verifyMobileNumber}
                   >
                     Generate OTP
                   </Button>
@@ -134,54 +154,58 @@ const LoginPage = () => {
                       className="w-9 "
                     />
                   ))} */}
-                   <Input
-                      value={enteredOtp[0]}
-                      onChange={getEnteredOtp}
-                      maxLength="1"
-                      className="w-9 "
-                      name='0'
-                    />
-                     <Input
-                      value={enteredOtp[1]}
-                      onChange={getEnteredOtp}
-                      maxLength="1"
-                      className="w-9 "
-                      name='1'
-                    />
-                     <Input
-                      value={enteredOtp[2]}
-                      onChange={getEnteredOtp}
-                      maxLength="1"
-                      className="w-9 "
-                    name='2'
-                    />
-                     <Input
-                      value={enteredOtp[3]}
-                      onChange={getEnteredOtp}
-                      maxLength="1"
-                      className="w-9 "
-                    name='3'
-                    />
-                     <Input
-                      value={enteredOtp[4]}
-                      onChange={getEnteredOtp}
-                      maxLength="1"
-                      className="w-9 "
-                      name='4'
-                    />
-                     <Input
-                      value={enteredOtp[5]}
-                      onChange={getEnteredOtp}
-                      maxLength="1"
-                      className="w-9 "
-                      name='5'
-                    />
+                  <Input
+                    value={enteredOtp[0]}
+                    onChange={getEnteredOtp}
+                    maxLength="1"
+                    className="w-9 "
+                    name="0"
+                  />
+                  <Input
+                    value={enteredOtp[1]}
+                    onChange={getEnteredOtp}
+                    maxLength="1"
+                    className="w-9 "
+                    name="1"
+                  />
+                  <Input
+                    value={enteredOtp[2]}
+                    onChange={getEnteredOtp}
+                    maxLength="1"
+                    className="w-9 "
+                    name="2"
+                  />
+                  <Input
+                    value={enteredOtp[3]}
+                    onChange={getEnteredOtp}
+                    maxLength="1"
+                    className="w-9 "
+                    name="3"
+                  />
+                  <Input
+                    value={enteredOtp[4]}
+                    onChange={getEnteredOtp}
+                    maxLength="1"
+                    className="w-9 "
+                    name="4"
+                  />
+                  <Input
+                    value={enteredOtp[5]}
+                    onChange={getEnteredOtp}
+                    maxLength="1"
+                    className="w-9 "
+                    name="5"
+                  />
                 </div>
                 {errorMessage.otpError ? (
-                <div>
-                  <small className="text-[#F44F57]">please enter the otp as 123456</small>
-                </div>
-                ):<></>}
+                  <div>
+                    <small className="text-[#F44F57]">
+                      please enter the otp as 123456
+                    </small>
+                  </div>
+                ) : (
+                  <></>
+                )}
                 <div className="flex ">
                   <div>
                     <small>Didn't receive OTP? </small>

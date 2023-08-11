@@ -2,5 +2,7 @@
   "/page": "app/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/baches/page": "app/baches/page.js"
+  "/center/page": "app/center/page.js",
+  "/coaches/page": "app/coaches/page.js",
+  "/trial/page": "app/trial/page.js"
 }
